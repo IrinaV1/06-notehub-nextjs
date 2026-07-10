@@ -17,9 +17,9 @@ export interface NewNote {
 }
 
 export async function fetchNotes(
-  search: string,
-  page: number,
-  perPage: number
+  search: string = '',
+  page: number = 1,
+  perPage: number = 12
 ): Promise<NotesHttpResponse> {
   const response = await axios.get<NotesHttpResponse>('/notes', {
     params: {
@@ -39,5 +39,10 @@ export async function createNote(note: NewNote): Promise<Note> {
 
 export async function deleteNote(id: string): Promise<Note> {
   const response = await axios.delete<Note>(`/notes/${id}`);
+  return response.data;
+}
+
+export async function fetchNoteById(id: string): Promise<Note> {
+  const response = await axios.get<Note>(`/notes/${id}`);
   return response.data;
 }

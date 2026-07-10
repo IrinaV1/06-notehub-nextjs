@@ -5,6 +5,7 @@ import type { Note } from '../../types/note';
 import css from './NoteList.module.css';
 import { deleteNote } from '../../lib/api';
 import toast from 'react-hot-toast';
+import Link from 'next/link';
 
 export interface NoteListProps {
   notes: Note[];
@@ -35,6 +36,9 @@ export default function NoteList({ notes }: NoteListProps) {
           <p className={css.content}>{note.content}</p>
           <div className={css.footer}>
             <span className={css.tag}>{note.tag}</span>
+            <Link className={css.link} href={`/notes/${note.id}`}>
+              View details
+            </Link>
             <button
               type="button"
               className={css.button}

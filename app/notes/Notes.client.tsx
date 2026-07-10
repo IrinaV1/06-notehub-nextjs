@@ -5,7 +5,7 @@ import css from './Notes.module.css';
 import { fetchNotes } from '@/lib/api';
 
 import { useState } from 'react';
-// import Modal from '@/components/Modal/Modal';
+import Modal from '@/components/Modal/Modal';
 import SearchBox from '@/components/SearchBox/SearchBox';
 import { useDebouncedCallback } from 'use-debounce';
 import NoteForm from '@/components/NoteForm/NoteForm';
@@ -13,8 +13,9 @@ import { Toaster } from 'react-hot-toast';
 // import ErrorMessage from '@/components/ErrorMessage/ErrorMessage';
 // import Loader from '@/components/Loader/Loader';
 import NoteList from '@/components/NoteList/NoteList';
+import Pagination from '@/components/Pagination/Pagination';
 
-export default function Notes() {
+export default function NotesClient() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -50,10 +51,10 @@ export default function Notes() {
         </button>
       </header>
       <Toaster position="top-right" />
-      {isLoading && <Loader />}
-      {isError && <ErrorMessage />}
+      {/* {isLoading && <Loader />}
+      {isError && <ErrorMessage />} */}
 
-      {data && data.notes.length === 0 && !isLoading && <p>No notes found.</p>}
+      {data?.notes.length === 0 && !isLoading && <p>No notes found.</p>}
 
       {data && data.notes.length > 0 && <NoteList notes={data.notes} />}
 
