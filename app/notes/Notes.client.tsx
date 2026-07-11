@@ -10,8 +10,6 @@ import SearchBox from '@/components/SearchBox/SearchBox';
 import { useDebouncedCallback } from 'use-debounce';
 import NoteForm from '@/components/NoteForm/NoteForm';
 import { Toaster } from 'react-hot-toast';
-// import ErrorMessage from '@/components/ErrorMessage/ErrorMessage';
-// import Loader from '@/components/Loader/Loader';
 import NoteList from '@/components/NoteList/NoteList';
 import Pagination from '@/components/Pagination/Pagination';
 
@@ -30,6 +28,13 @@ export default function NotesClient() {
     queryFn: () => fetchNotes(searchQuery, currentPage, 12),
     placeholderData: keepPreviousData,
   });
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+  if (isError) {
+    return <p>Failed to load notes.</p>;
+  }
 
   const openModal = () => setIsOpenModal(true);
   const closeModal = () => setIsOpenModal(false);
@@ -51,10 +56,8 @@ export default function NotesClient() {
         </button>
       </header>
       <Toaster position="top-right" />
-      {/* {isLoading && <Loader />}
-      {isError && <ErrorMessage />} */}
 
-      {data?.notes.length === 0 && !isLoading && <p>No notes found.</p>}
+      {data?.notes.length === 0 && <p>No notes found.</p>}
 
       {data && data.notes.length > 0 && <NoteList notes={data.notes} />}
 

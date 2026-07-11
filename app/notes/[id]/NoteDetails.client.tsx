@@ -10,16 +10,16 @@ export default function NoteDetailsClient() {
   const {
     data: note,
     isLoading,
-    error,
+    isError,
   } = useQuery({
     queryKey: ['note', id],
     queryFn: () => fetchNoteById(id),
     refetchOnMount: false,
   });
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <p>Loading, please wait...</p>;
 
-  if (error || !note) return <p>Some error..</p>;
+  if (isError || !note) return <p>Something went wrong.</p>;
 
   const formattedDate = note.updatedAt
     ? `Updated at: ${note.updatedAt}`
