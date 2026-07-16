@@ -12,8 +12,13 @@ import NoteForm from '@/components/NoteForm/NoteForm';
 import { Toaster } from 'react-hot-toast';
 import NoteList from '@/components/NoteList/NoteList';
 import Pagination from '@/components/Pagination/Pagination';
+import { NoteTag } from '@/types/note';
 
-export default function NotesClient() {
+interface NotesClientProps {
+  tag: NoteTag | undefined;
+}
+
+export default function NotesClient({ tag }: NotesClientProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -24,8 +29,8 @@ export default function NotesClient() {
   }, 300);
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['notes', searchQuery, currentPage],
-    queryFn: () => fetchNotes(searchQuery, currentPage, 12),
+    queryKey: ['notes', searchQuery, currentPage, tag],
+    queryFn: () => fetchNotes(searchQuery, currentPage, 12, tag),
     placeholderData: keepPreviousData,
   });
 
